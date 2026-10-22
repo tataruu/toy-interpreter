@@ -1,0 +1,23 @@
+package interpreter.model.exp;
+
+import interpreter.model.value.IValue;
+
+
+
+public record VarExp(String id ) implements  IExp {
+
+    @Override
+    public IValue eval(IDictioney<String, IValue>, symTable){
+        if(!symTable.isDefined(id)) {
+            throw new ExpressionException("Variabila '" + id + "' nu este definită.");
+        }
+        return symTable.lookup(id);
+    }
+
+    @Override
+    public String toString(){
+        return id;
+
+    }
+}
+

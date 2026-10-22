@@ -1,20 +1,31 @@
 plugins {
     id 'java'
+    id 'application'
 }
-
-group = 'org.example'
-version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:6.0.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-test {
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(27) // Setează 25 dacă treci pe versiunea cerută
+    }
+}
+
+application {
+    mainClass = 'interpreter.Main'
+}
+
+tasks.named('run', JavaExec) {
+    standardInput = System.in
+}
+
+tasks.named('test', Test) {
     useJUnitPlatform()
 }
