@@ -23,7 +23,7 @@ public class MyList<T> implements IList<T> {
 
     @Override
     public int size(){
-        return list.size()
+        return list.size();
     }
 
     @Override

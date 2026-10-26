@@ -40,8 +40,8 @@ public class PrgState {
         this.exeStack = exeStack;
     }
 
-    public void setSymTable(IDictionary<String , IValue>){
-        this.symTable = symTable;
+    public void setSymTable(IDictionary<String , IValue> symTable){
+        this.symTable = this.symTable;
     }
 
     public void setOut(IList<IValue> out) {
@@ -57,8 +57,5 @@ public class PrgState {
                 "--------------------------\n";
     }
 
-
-
-    PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), program);
 
 }
