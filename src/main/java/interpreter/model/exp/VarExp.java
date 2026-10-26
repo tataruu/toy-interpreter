@@ -1,6 +1,6 @@
 package interpreter.model.exp;
 
-import interpreter.exceptions.ExpressionException;
+import interpreter.exceptions.*;
 import interpreter.model.adt.IDictionary;
 import interpreter.model.value.IValue;
 
@@ -9,7 +9,7 @@ import interpreter.model.value.IValue;
 public record VarExp(String id ) implements  IExp {
 
     @Override
-    public IValue eval(IDictionary<String, IValue>, symTable){
+    public IValue eval(IDictionary<String, IValue> symTable){
         if(!symTable.isDefined(id)) {
             throw new ExpressionException("Variabila '" + id + "' nu este definită.");
         }
