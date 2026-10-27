@@ -14,7 +14,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(27) // Setează 25 dacă treci pe versiunea cerută
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 

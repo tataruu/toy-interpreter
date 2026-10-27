@@ -9,9 +9,9 @@ import interpreter.model.value.IValue;
 public record VarExp(String id ) implements  IExp {
 
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable){
+    public IValue eval(IDictionary<String, IValue> symTable) throws MyException{
         if(!symTable.isDefined(id)) {
-            throw new ExpressionException("Variabila '" + id + "' nu este definită.");
+            throw new ExpressionException("Variabila " + id + " nu este definită.");
         }
         return symTable.lookup(id);
     }
