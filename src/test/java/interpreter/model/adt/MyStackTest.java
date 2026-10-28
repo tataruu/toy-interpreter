@@ -24,7 +24,8 @@ class MyStackTest {
 
     }
 
-    void popOnEmptyStack(){
+    @Test
+    void popOnEmptyStackThrowsException(){
         ADTException ex = assertThrows(ADTException.class, () -> stack.pop());
         assertEquals("Stack is empty", ex.getMessage());
     }
