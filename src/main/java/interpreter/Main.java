@@ -49,7 +49,7 @@ public class Main {
 
     private static void runProgram(IStmt program){
         try {
-            PrgState prg = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(),  program);
+            PrgState prg =  PrgState.of(program);
             IRepository repo = new Repository(prg);
             Controller controller = new Controller(repo, true);
             System.out.println("Starting execution");
