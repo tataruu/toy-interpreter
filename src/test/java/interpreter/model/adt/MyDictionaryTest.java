@@ -13,27 +13,33 @@ class MyDictionaryTest {
     private IDictionary<String, IValue> dict;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         dict = new MyDictionary<>();
     }
 
     @Test
     void putAndLookUpTest() throws MyException {
-        dict.put("v" , new IntValue(10));
+        dict.put("v", new IntValue(10));
         assertTrue(dict.isDefined("v"));
         assertEquals(new IntValue(10), dict.lookup("v"));
     }
 
     @Test
     void updateChangesValue() throws ADTException {
-        dict.put("v" , new IntValue(10));
-        dict.update("v" , new IntValue(20));
-        assertEquals(new IntValue(20) , dict.lookup("v"));
+        dict.put("v", new IntValue(10));
+        dict.update("v", new IntValue(20));
+        assertEquals(new IntValue(20), dict.lookup("v"));
 
     }
 
     @Test
-    void lookUpMissingKeyThrowsException(){
+    void lookUpMissingKeyThrowsException() {
         assertThrows(ADTException.class, () -> dict.lookup("missing"));
     }
+
+    @Test
+    void removeMissingKeyThrowsException() {
+        assertThrows(ADTException.class, () -> dict.remove("missing"));
+    }
+
 }

@@ -3,6 +3,7 @@ package interpreter.model.adt;
 import interpreter.exceptions.ADTException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MyDictionary<K,V> implements IDictionary<K,V>{
 
@@ -42,5 +43,18 @@ public class MyDictionary<K,V> implements IDictionary<K,V>{
     @Override
     public String toString() {
         return dictionary.toString();
+    }
+
+    @Override
+    public Map<K,V> toMap() {
+        return Map.copyOf(dictionary);
+    }
+
+    @Override
+    public void remove(K key) throws ADTException {
+        if(!isDefined(key))
+            throw new ADTException("Key is not defined");
+        dictionary.remove(key);
+
     }
 }

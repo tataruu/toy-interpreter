@@ -17,7 +17,7 @@ class CompStmtTest {
         IStmt s2 = new NopStmt();
         IStmt comp = new CompStmt(s1,s2);
 
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new NopStmt());
+        PrgState state =  PrgState.of(new NopStmt());
         state.getExeStack().pop();
         comp.execute(state);
 

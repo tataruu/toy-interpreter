@@ -17,7 +17,7 @@ class PrintStmtTest {
 
     @Test
     void executeAddsValueToOutList() throws MyException{
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new NopStmt());
+        PrgState state = PrgState.of(new NopStmt());
         IStmt printStmt = new PrintStmt(new ValueExp(new IntValue(10)));
 
         printStmt.execute(state);

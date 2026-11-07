@@ -8,4 +8,8 @@ public record BoolType() implements IType {
     public IValue defaultValue(){ return new BoolValue(false);
     }
 
+    @Override
+    public String toString() {
+        return "bool";
+    }
 }

@@ -3,6 +3,8 @@ package interpreter.model.adt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MyListTest {
@@ -27,4 +29,13 @@ class MyListTest {
         list.add(10);
         assertEquals(1, list.size());
     }
+
+    @Test
+    void toListKeepsOrder(){
+        list.add(10);
+        list.add(20);
+        assertEquals(List.of(10,20),list.toList());
+
+    }
+
 }

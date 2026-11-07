@@ -11,4 +11,7 @@ public class MyStack<T> implements IStack<T> {
     }
     @Override public boolean isEmpty() { return stack.isEmpty(); }
     @Override public String toString() { return stack.toString(); }
+    @Override public List<T> toList(){
+        return List.copyOf(stack);
+    }
 }
