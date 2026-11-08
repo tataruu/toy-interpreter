@@ -12,15 +12,23 @@ import interpreter.model.value.IntValue;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import javax.swing.plaf.nimbus.State;
+
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
-    private static PrgState run(IStmt program) throws MyException{
+
+    @TempDir
+    Path dir;
+
+    private  PrgState run(IStmt program) throws MyException{
         PrgState state = PrgState.of(program);
-        new Controller(new Repository(state),false).allStep();
+        var repo = new Repository(state, dir.resolve("log.txt").toString());
+        new Controller(repo, false).allStep();
         return state;
 
     }
@@ -34,7 +42,7 @@ class ControllerTest {
     @Test
     void oneStepOnEmptyStackThrowsException() {
         PrgState state = PrgState.of(new NopStmt());
-        Controller ctrl = new Controller(new Repository(state), false);
+        Controller ctrl = new Controller(new Repository(state ,dir.resolve("log.txt").toString()), false);
         try{
             ctrl.oneStep(state); // runs nopstmt
             assertThrows(StatementException.class, () -> ctrl.oneStep(state));
@@ -45,4 +53,6 @@ class ControllerTest {
         }
 
     }
+
+
 }

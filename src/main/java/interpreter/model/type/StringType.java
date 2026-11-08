@@ -1,3 +1,5 @@
+package interpreter.model.type;
+
 import interpreter.model.type.IType;
 import interpreter.model.value.IValue;
 import interpreter.model.value.StringValue;

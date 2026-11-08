@@ -18,6 +18,9 @@ bin/
 /nbproject/
 /build/
 
+# Interpreter log files
+log*.txt
+
 # OS
 .DS_Store
 Thumbs.db

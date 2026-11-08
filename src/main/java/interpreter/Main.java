@@ -1,66 +1,29 @@
 package interpreter;
 
 import interpreter.controller.Controller;
-import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
-import interpreter.model.adt.MyDictionary;
-import interpreter.model.adt.MyList;
-import interpreter.model.adt.MyStack;
 import interpreter.model.stmt.IStmt;
-import interpreter.repository.IRepository;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
+import interpreter.view.ExitCommand;
+import interpreter.view.RunExampleCommand;
+import interpreter.view.TextMenu;
 
-import java.util.Scanner;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Toy Interpreter running...");
+        List<IStmt> programs = List.of(Examples.EX1, Examples.EX2, Examples.EX3);
 
-        Scanner scanner = new Scanner(System.in);
-        while(true){
-            System.out.println("Select the option(0 for closing)");
-            System.out.println("1. int v; v=2; print(v)");
-            System.out.println("2. int a; int b; a=2+3*5; b=a+1; print(b)");
-            System.out.println("3. bool a; int v; a=true; (if a then v=2 else v=3); print(v)");
-
-            int choice = scanner.nextInt();
-            if (choice == 0) break;
-
-            IStmt selectedProgram ;
-            if(choice == 1)
-                 selectedProgram = Examples.EX1;
-            else if(choice == 2)
-                selectedProgram = Examples.EX2;
-            else if(choice == 3)
-                selectedProgram = Examples.EX3;
-            else
-                selectedProgram  = null;
-
-            if(selectedProgram != null)
-                runProgram(selectedProgram);
-            else
-                System.out.println("Invalid option");
-
-
+        TextMenu menu = new TextMenu();
+        menu.addCommand(new ExitCommand("0", "exit"));
+        // one program state, one repository (with its own log file) and one controller per example
+        for (int i = 0; i < programs.size(); i++) {
+            IStmt program = programs.get(i);
+            var repo = new Repository(PrgState.of(program), "log" + (i + 1) + ".txt");
+            var controller = new Controller(repo, true);
+            menu.addCommand(new RunExampleCommand(String.valueOf(i + 1), program.toString(), controller));
         }
-        scanner.close();
+        menu.show();
     }
-
-    private static void runProgram(IStmt program){
-        try {
-            PrgState prg =  PrgState.of(program);
-            IRepository repo = new Repository(prg);
-            Controller controller = new Controller(repo, true);
-            System.out.println("Starting execution");
-            controller.allStep();
-            System.out.println("Execution done");
-        }
-        catch (MyException e) {
-            System.out.println("Runtime error: " + e.getMessage());
-        }
-
-
-        }
-    }
-
+}
