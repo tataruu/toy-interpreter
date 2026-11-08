@@ -16,6 +16,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import javax.swing.plaf.nimbus.State;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,6 +52,35 @@ class ControllerTest {
         catch (MyException e) {
             fail("Unexpected error");
         }
+
+    }
+
+    @Test
+    void fileExampleReadsBothNumbersAndClosesFile() throws Exception{
+        Path in = dir.resolve("test.in");
+        Files.writeString(in,"15\n16\n");
+        PrgState s = run(Examples.fileExample(in.toString()));
+        assertEquals(new IntValue(15), s.getOut().get(0));
+        assertEquals(new IntValue(16), s.getOut().get(1));
+        assertTrue(s.getFileTable().toMap().isEmpty());
+    }
+
+    @Test
+    void fileExampleEmptyFilePrintsZeroTwice() throws Exception{
+        Path in = dir.resolve("empty.in");
+        Files.writeString(in,"");
+        PrgState s = run(Examples.fileExample(in.toString()));
+        assertEquals(new IntValue(0), s.getOut().get(0));
+        assertEquals(new IntValue(0), s.getOut().get(1));
+        assertTrue(s.getFileTable().toMap().isEmpty());
+
+    }
+
+    @Test
+    void example5PrintsFive() throws MyException{
+        PrgState state = run(Examples.EX5);
+        assertEquals(1, state.getOut().size());
+        assertEquals(new IntValue(5), state.getOut().get(0));
 
     }
 

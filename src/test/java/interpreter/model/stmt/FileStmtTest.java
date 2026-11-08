@@ -8,10 +8,13 @@ import interpreter.model.type.BoolType;
 import interpreter.model.type.IntType;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.StringValue;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -34,6 +37,15 @@ class FileStmtTest {
         file = new ValueExp(fileName);
         state = PrgState.of(new NopStmt());
         new VarDeclStmt("x", new IntType()).execute(state);
+
+
+    }
+
+    @AfterEach
+    void closeOpenFiles() throws IOException {
+        for(BufferedReader reader : state.getFileTable().toMap().values()) {
+            reader.close();
+        }
 
 
     }
