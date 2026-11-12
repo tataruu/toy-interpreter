@@ -25,4 +25,9 @@ public record LogicExp(LogicOp op, IExp left, IExp right) implements  IExp{
 
 
     }
+
+    @Override
+    public String toString() {
+        return "(" + left + " " + op + " " + right + ")";
+    }
 }

@@ -54,7 +54,7 @@ public class PrgState {
     }
 
     public void setSymTable(IDictionary<String , IValue> symTable){
-        this.symTable = this.symTable;
+        this.symTable = symTable;
     }
 
     public void setOut(IList<IValue> out) {
