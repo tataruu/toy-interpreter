@@ -1,5 +1,6 @@
 package interpreter.model.exp;
 
+import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
 import interpreter.model.adt.IHeap;
@@ -12,9 +13,9 @@ public record ReadHeapExp(IExp exp) implements IExp {
     @Override
     public IValue eval (IDictionary<String, IValue> symTable, IHeap heap) throws MyException {
         if(!(exp.eval(symTable, heap) instanceof RefValue ref))
-            throw new MyException("Invalid expression");
+            throw new ExpressionException("rH: " + exp + " is not a reference");
         if(!(heap.isDefined(ref.address())))
-            throw new  MyException("Invalid expression");
+            throw new ExpressionException("rH: address " + ref.address() + " is not in the heap");
         return heap.get(ref.address());
     }
 
