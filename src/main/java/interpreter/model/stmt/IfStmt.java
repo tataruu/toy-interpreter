@@ -12,7 +12,7 @@ public record IfStmt(IExp cond, IStmt thenS, IStmt elseS)  implements IStmt{
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        IValue condValue = cond.eval(state.getSymTable());
+        IValue condValue = cond.eval(state.getSymTable(), state.getHeap());
         if (condValue instanceof BoolValue boolVal) {
             IStack<IStmt> stack = state.getExeStack();
             if (boolVal.val())

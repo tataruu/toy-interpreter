@@ -1,7 +1,9 @@
 package interpreter.model.exp;
 
 import interpreter.exceptions.ExpressionException;
+import interpreter.model.adt.IHeap;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -14,7 +16,8 @@ class LogicExpTest {
     @Test
     void nonBooleanOperandThrowsException(){
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         IExp logicExp = new LogicExp(LogicOp.AND, new ValueExp(new IntValue(10)) , new ValueExp(new BoolValue(true)));
-        assertThrows(ExpressionException.class, () -> logicExp.eval(symTable));
+        assertThrows(ExpressionException.class, () -> logicExp.eval(symTable, heap));
     }
 }

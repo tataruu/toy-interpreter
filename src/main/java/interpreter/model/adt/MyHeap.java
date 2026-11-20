@@ -52,7 +52,7 @@ public class MyHeap implements IHeap {
 
     @Override
     public String toString(){
-        return heap.toString()
+        return heap.toString();
     }
 
 }

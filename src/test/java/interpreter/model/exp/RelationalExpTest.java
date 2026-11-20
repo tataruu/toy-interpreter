@@ -3,7 +3,9 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -13,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RelationalExpTest {
     private final IDictionary<String, IValue> symTable = new MyDictionary<>();
+    private final IHeap heap = new MyHeap();
 
     private boolean eval(int a, RelOp op, int b) throws MyException {
         IExp exp = new RelationalExp(op, new ValueExp(new IntValue(a)), new ValueExp(new IntValue(b)));
-        return ((BoolValue) exp.eval(symTable)).val();
+        return ((BoolValue) exp.eval(symTable, heap)).val();
     }
 
     @Test
@@ -58,12 +61,12 @@ class RelationalExpTest {
     @Test
     void nonIntegerFirstOperandThrows() {
         IExp exp = new RelationalExp(RelOp.LT, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(1)));
-        assertThrows(ExpressionException.class, () -> exp.eval(symTable));
+        assertThrows(ExpressionException.class, () -> exp.eval(symTable, heap));
     }
 
     @Test
     void nonIntegerSecondOperandThrows() {
         IExp exp = new RelationalExp(RelOp.LT, new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)));
-        assertThrows(ExpressionException.class, () -> exp.eval(symTable));
+        assertThrows(ExpressionException.class, () -> exp.eval(symTable, heap));
     }
 }
