@@ -8,7 +8,11 @@ import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.stmt.NopStmt;
+import interpreter.model.type.IntType;
+import interpreter.model.type.RefType;
+import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
+import interpreter.model.value.RefValue;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
@@ -18,6 +22,8 @@ import javax.swing.plaf.nimbus.State;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -84,5 +90,37 @@ class ControllerTest {
 
     }
 
+
+    @Test
+    void example6PrintsTheTwoReferences() throws MyException {
+        PrgState s = run(Examples.EX6);
+        assertEquals(List.of(new RefValue(1, new IntType()), new RefValue(2, new RefType(new IntType()))),
+                s.getOut().toList());
+        assertEquals(Map.of(1, new IntValue(20), 2, new RefValue(1, new IntType())), s.getHeap().getContent());
+    }
+
+    @Test
+    void example7Prints20And25() throws MyException {
+        assertEquals(List.of(new IntValue(20), new IntValue(25)), run(Examples.EX7).getOut().toList());
+    }
+
+    @Test
+    void example8Prints20And35() throws MyException {
+        PrgState s = run(Examples.EX8);
+        assertEquals(List.of(new IntValue(20), new IntValue(35)), s.getOut().toList());
+        assertEquals(Map.of(1, new IntValue(30)), s.getHeap().getContent());
+    }
+
+    @Test
+    void example9Prints20WithTheSafeCollector() throws MyException {
+        assertEquals(List.of(new IntValue(20)), run(Examples.EX9).getOut().toList());
+    }
+
+    @Test
+    void example10CountsDownFrom4() throws MyException {
+        List<IValue> expected = List.of(new IntValue(4), new IntValue(3), new IntValue(2),
+                new IntValue(1), new IntValue(0));
+        assertEquals(expected, run(Examples.EX10).getOut().toList());
+    }
 
 }
